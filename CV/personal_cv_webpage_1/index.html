@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Personal CV</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#05c7c7",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0f2323",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const toggleHandle = document.getElementById('toggleHandle');
+            const htmlElement = document.documentElement;
+            
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDarkMode = savedTheme === 'dark' || (!savedTheme && prefersDark);
+            
+            // Apply initial theme
+            if (isDarkMode) {
+                htmlElement.classList.add('dark');
+                toggleHandle.classList.add('translate-x-7');
+            } else {
+                htmlElement.classList.remove('dark');
+                toggleHandle.classList.remove('translate-x-7');
+            }
+            
+            // Toggle theme when button is clicked
+            themeToggle.addEventListener('click', function() {
+                const isDark = htmlElement.classList.contains('dark');
+                
+                // Add click effect
+                themeToggle.classList.add('scale-95');
+                setTimeout(() => {
+                    themeToggle.classList.remove('scale-95');
+                }, 150);
+                
+                if (isDark) {
+                    htmlElement.classList.remove('dark');
+                    toggleHandle.classList.remove('translate-x-7');
+                    themeToggle.classList.remove('bg-[#05c7c7]');
+                    themeToggle.classList.add('bg-[#214a4a]');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    htmlElement.classList.add('dark');
+                    toggleHandle.classList.add('translate-x-7');
+                    themeToggle.classList.remove('bg-[#214a4a]');
+                    themeToggle.classList.add('bg-[#05c7c7]');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
+            // Set initial toggle button color based on theme
+            if (isDarkMode) {
+                themeToggle.classList.remove('bg-[#214a4a]');
+                themeToggle.classList.add('bg-[#05c7c7]');
+            } else {
+                themeToggle.classList.remove('bg-[#05c7c7]');
+                themeToggle.classList.add('bg-[#214a4a]');
+            }
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const clearSearch = document.getElementById('clearSearch');
+            
+            function performSearch(searchTerm) {
+                const portfolioItems = document.querySelectorAll('.portfolio-item');
+                let visibleCount = 0;
+                
+                // If search is empty, show all items
+                if (searchTerm === '') {
+                    portfolioItems.forEach(item => {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    });
+                } else {
+                    // Filter items based on search term
+                    portfolioItems.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        if (text.includes(searchTerm)) {
+                            item.style.display = 'block';
+                            visibleCount++;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                }
+                
+                // Optional: You can display the count somewhere if needed
+                // console.log(`Found ${visibleCount} items matching "${searchTerm}"`);
+            }
+            
+            // Handle input events
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                performSearch(searchTerm);
+                
+                // Show/hide clear button based on input
+                if (this.value.length > 0) {
+                    clearSearch.style.display = 'block';
+                } else {
+                    clearSearch.style.display = 'none';
+                }
+            });
+            
+            // Also trigger search when user presses Enter
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.toLowerCase();
+                    performSearch(searchTerm);
+                }
+            });
+            
+            // Clear search when clicking the clear button
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                clearSearch.style.display = 'none';
+                
+                // Show all portfolio items
+                performSearch('');
+            });
+        });
+    </script>
+</head>
+<body class="bg-background-dark font-display">
+<div class="flex min-h-screen">
+<aside class="w-64 bg-[#102323] p-4 flex flex-col justify-between fixed h-screen overflow-y-auto">
+<div>
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="Profile picture of M Aftab Akram" style='background-image: url("profile-image.jpg");'></div>
+<div>
+<h1 class="text-white text-lg font-medium">M Aftab Akram</h1>
+<p class="text-[#8ecccc] text-sm">Full Stack Developer</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#214a4a] text-white" href="#home">
+<span class="material-symbols-outlined">home</span>
+<span class="text-sm font-medium">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-[#214a4a]/60" href="#about">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">About</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-[#214a4a]/60" href="#services">
+<span class="material-symbols-outlined">work</span>
+<span class="text-sm font-medium">Service</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-[#214a4a]/60" href="#portfolio">
+<span class="material-symbols-outlined">folder</span>
+<span class="text-sm font-medium">Portfolio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-[#214a4a]/60" href="#news">
+<span class="material-symbols-outlined">article</span>
+<span class="text-sm font-medium">News</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-[#214a4a]/60" href="#contact">
+<span class="material-symbols-outlined">email</span>
+<span class="text-sm font-medium">Contact</span>
+</a>
+</nav>
+</div>
+<div class="text-center text-xs text-[#8ecccc]">
+<p>© 2024 M Aftab Akram. All Rights Reserved.</p>
+</div>
+</aside>
+<main class="flex-1 p-10 bg-background-dark ml-64">
+<!-- Top bar with search and theme toggle -->
+<div class="flex justify-between items-center mb-8">
+  <!-- Search bar -->
+  <div class="relative w-1/3">
+    <input type="text" id="searchInput" placeholder="Search projects, skills, experience..." class="w-full px-4 py-2 rounded-lg bg-[#102323] text-white border border-[#2f6a6a] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+    <span class="material-symbols-outlined absolute right-10 top-2 text-[#8ecccc] cursor-pointer" id="clearSearch" style="display: none;">close</span>
+    <span class="material-symbols-outlined absolute right-3 top-2 text-[#8ecccc]">search</span>
+  </div>
+  
+  <!-- Theme toggle -->
+  <div class="flex items-center">
+    <span class="material-symbols-outlined text-[#8ecccc] mr-2">dark_mode</span>
+    <button id="themeToggle" class="relative rounded-full w-14 h-7 bg-[#05c7c7] focus:outline-none transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+      <span id="toggleHandle" class="absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition-all duration-300 ease-in-out transform translate-x-7 shadow-md"></span>
+    </button>
+    <span class="material-symbols-outlined text-[#8ecccc] ml-2">light_mode</span>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto">
+<div id="home" class="flex items-center gap-8">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-48 ring-4 ring-primary/50" data-alt="Profile picture of M Aftab Akram" style='background-image: url("profile-image.jpg");'></div>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#F44336] pl-4 pr-4">
+<p class="text-white text-sm font-medium leading-normal">HELLO</p>
+</div>
+</div>
+<h1 class="text-white tracking-light text-5xl font-bold leading-tight">M Aftab Akram</h1>
+<p class="text-[#bdbdbd] text-lg font-normal leading-normal mt-2">
+                            I'm currently in my 3rd semester at COMSATS University Islamabad, Vehari Campus (CUI Vehari), and I'm a passionate Full Stack Developer. I've built several projects using modern web technologies and I'm focused on growing my skills in both frontend and backend development.
+                        </p>
+</div>
+</div>
+<div class="mt-12 p-8 bg-[#102323] rounded-xl shadow-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a]">
+<span class="material-symbols-outlined text-primary mt-1">badge</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">First Name:</p>
+<p class="text-white text-base font-normal">M Aftab</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a]">
+<span class="material-symbols-outlined text-primary mt-1">badge</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">Last Name:</p>
+<p class="text-white text-base font-normal">Akram</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a]">
+<span class="material-symbols-outlined text-primary mt-1">cake</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">University:</p>
+<p class="text-white text-base font-normal">COMSATS Vehari</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a]">
+<span class="material-symbols-outlined text-primary mt-1">flag</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">Semester:</p>
+<p class="text-white text-base font-normal">3rd Semester</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a]">
+<span class="material-symbols-outlined text-primary mt-1">phone</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">Focus:</p>
+<p class="text-white text-base font-normal">Full Stack Dev</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a]">
+<span class="material-symbols-outlined text-primary mt-1">email</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">Email:</p>
+<p class="text-white text-base font-normal">ranaaftabakram982@gmail.com</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a] md:border-b-0">
+<span class="material-symbols-outlined text-primary mt-1">home_pin</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">Location:</p>
+<p class="text-white text-base font-normal">Vehari, Pakistan</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a] md:border-b-0">
+<span class="material-symbols-outlined text-primary mt-1">language</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">Languages:</p>
+<p class="text-white text-base font-normal">English, Urdu</p>
+</div>
+</div>
+<div class="flex items-start gap-4 py-3 border-b border-solid border-b-[#2f6a6a] md:border-b-0">
+<span class="material-symbols-outlined text-primary mt-1">code</span>
+<div class="flex flex-col">
+<p class="text-[#8ecccc] text-sm font-normal">GitHub:</p>
+<p class="text-white text-base font-normal"><a href="https://github.com/Aftab272" target="_blank" class="hover:text-primary transition-colors">github.com/Aftab272</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-start gap-4">
+<button id="downloadResumeBtn" class="px-8 py-3 rounded-lg bg-[#214a4a] text-white font-medium hover:bg-[#2f6a6a] transition-colors shadow-md">
+                        Download Resume
+                    </button>
+<button id="contactMeBtn" class="px-8 py-3 rounded-lg bg-primary text-background-dark font-medium hover:bg-primary/80 transition-colors shadow-lg shadow-primary/20">
+                        Contact Me
+                    </button>
+</div>
+<div class="mt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Portfolio</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A brightly lit, modern office space with large windows and a clean, minimalist design." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKiN3uvyq5OzbA7yxVSzUewlnGR2NsT9VmCwn1Y9SJzydrBSDppP9ILqLuk1UXUKzY_CtO71fBRqeoSG1etKq2P-FDYoMdmGEqYVYs3ZPbcOiL5yQsp8-cgr9MwtqC9k_7iQipqveAADkA1Vbxy1k8W0XNPlzWe8iELyG_t96ZMkBLe-MYEv9jaMoPT-_ygXw_JCD7n8RYc5ZZu4vEkBDpopPMymQpFRVeewWINOQsVrpLfHk_5HTry3lXATQWFRCvkuZNG0qLyA");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+UI/UX
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">E-commerce Dashboard</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A comprehensive dashboard for e-commerce analytics with real-time data visualization.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Figma</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">D3.js</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 2 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A close-up shot of a person's hands typing on a laptop keyboard, with the screen displaying lines of code." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFLLo8oMj90wBc6blqg9mbCd_SgETSsYwjuPyeEFlrWN1V4Cyy_n6A17kELySHjM_zboW5mO8NQi5zhcYUsYir5kyi_7uSTkhM4k0vVzkJ35NqZ6hv2yt5rJV_58mglJUwabsOCY2zwg_cUEieceQvKitJxcUeEJkfosblU92eSHGbck1MVsarK2B2z622nLozjZc8WhLTLiS3XDdNhOwDAXTg4lyEsy0Blj3mB0s4xrjQg1QP4jPJOxmYOukfr_hce3B5V8UEZw");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web App
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Task Management App</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A productivity application for managing tasks with drag-and-drop functionality.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Vue.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Firebase</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Tailwind</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 3 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A sleek and modern user interface design for a mobile application, displayed on a smartphone screen." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqo3QCx72ufIUWpGNWaZit33HPead2yz2EvMJXCOGEENSUeJFYMPhnGNZtX9TXSakiMGmRy9g8mTEZfiO_WR0Rbs-apzL4grq9YSrirtpNngRy54Mr1KKRbt7qpcO4DnBktSDwbMxziGm_FV5QoLGpoXPBiZ3SZrqKAluaKTgPRaFm68uD3Zo1XHWgfbrOyEyWqHMD3IzZWOFnlpTaw68c46-oF82nRDcG3E-oBOg0diSJqpjdyxOnVv1P1Wg1qH5L_0qmFe-3ZQ");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Mobile
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Fitness Tracker</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A mobile application for tracking workouts and nutrition with personalized recommendations.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Flutter</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Node.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">MongoDB</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 4 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A modern website design with clean typography and ample white space." style='background-image: url("https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Design
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Corporate Website</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A responsive corporate website with modern design and CMS integration.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">WordPress</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">PHP</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 5 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A dashboard interface with charts and data visualization." style='background-image: url("https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Dashboard
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Analytics Dashboard</h3>
+<p class="text-[#8ecccc] text-sm mb-4">An interactive dashboard for visualizing business metrics and KPIs.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Chart.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">API</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 6 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A mobile app interface with a clean, modern design." style='background-image: url("https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Mobile App
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Recipe Finder</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A mobile app that helps users discover recipes based on available ingredients.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React Native</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Redux</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Firebase</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Team4stack Website -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Team4stack website project" style='background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Development
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Team4stack Website</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Official website for Team4stack showcasing our services and portfolio. A responsive, modern design with interactive elements.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Tailwind CSS</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="http://www.team4stack.com" target="_blank" class="text-primary text-sm font-medium hover:underline">Visit Website</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- GitHub Profile -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="GitHub profile and projects" style='background-image: url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Open Source
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">GitHub Profile</h3>
+<p class="text-[#8ecccc] text-sm mb-4">My GitHub profile showcasing open-source contributions, personal projects, and collaborative work. Check out my repositories and code samples.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272" target="_blank" class="text-primary text-sm font-medium hover:underline">View Profile</a>
+<a href="https://github.com/Aftab272?tab=repositories" target="_blank" class="text-primary text-sm font-medium hover:underline">View Projects</a>
+</div>
+</div>
+</div>
+
+<!-- MernCrypto Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="MernCrypto project" style='background-image: url("https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+MERN Stack
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">MernCrypto</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A full-stack cryptocurrency tracking application built with the MERN stack. Features real-time price updates and portfolio management.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">MongoDB</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Express</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Node.js</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/merncrypto" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Weather Question Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Weather application project" style='background-image: url("https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+JavaScript
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Weather Question Attempt</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A weather application that fetches and displays current weather conditions. Features location-based weather data and forecasts.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">API Integration</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">CSS3</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/weather-question-attempt" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Generic Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Project showcase" style='background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Full Stack
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Project</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A comprehensive full-stack application showcasing advanced development techniques and best practices.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Node.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Database</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/project" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Blogger Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Blogging platform project" style='background-image: url("https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web App
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Blogger</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A full-featured blogging platform with user authentication, post creation, and content management capabilities.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Firebase</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Markdown</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/blogger" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Team4stack Vercel Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Team4stack Vercel Portfolio" style='background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Development
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Team4stack Portfolio</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Live portfolio website deployed on Vercel showcasing Team4stack projects and services.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Vercel</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://aftab-portfolioo.vercel.app/" target="_blank" class="text-primary text-sm font-medium hover:underline">View Live Site</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Portfolio Screenshot Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Portfolio Website Screenshot" style='background-image: url("portfolio-screenshot.png");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Development
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Portfolio Website</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Screenshot of my personal portfolio website deployed on Vercel. Clients can view the live site using the link below.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Vercel</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://aftab-portfolioo.vercel.app/" target="_blank" class="text-primary text-sm font-medium hover:underline">View Live Site</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Experience</h2>
+<div class="relative pl-8">
+<div class="absolute left-0 top-0 h-full w-0.5 bg-[#2f6a6a]"></div>
+<div class="relative mb-12">
+<div class="absolute -left-10 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary ring-8 ring-[#102323]"></div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<p class="text-sm font-medium text-primary mb-1">2023 - 2024</p>
+<h3 class="text-white text-xl font-semibold">UI/UX Designer</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Freelance</p>
+<p class="text-white/80 text-sm">Designed user interfaces and experiences for various web and mobile applications. Created wireframes, prototypes, and high-fidelity designs that improved user engagement and satisfaction.</p>
+</div>
+</div>
+<div class="relative mb-12">
+<div class="absolute -left-10 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary ring-8 ring-[#102323]"></div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<p class="text-sm font-medium text-primary mb-1">2024 - 2025</p>
+<h3 class="text-white text-xl font-semibold">Front-end Developer</h3>
+<p class="text-[#8ecccc] text-sm mb-4">COMSATS University Project</p>
+<p class="text-white/80 text-sm">Developed responsive and interactive web applications using modern frontend technologies. Collaborated with backend developers to integrate APIs and implement user-facing features.</p>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -left-10 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary ring-8 ring-[#102323]"></div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<p class="text-sm font-medium text-primary mb-1">2023 - 2024</p>
+<h3 class="text-white text-xl font-semibold">AI Automation Specialist</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Personal Projects</p>
+<p class="text-white/80 text-sm">Implemented AI-powered automation solutions to streamline workflows and increase productivity. Worked with various AI tools and platforms to create efficient automation processes.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Education</h2>
+<div class="relative pl-8">
+<div class="absolute left-0 top-0 h-full w-0.5 bg-[#2f6a6a]"></div>
+<div class="relative mb-12">
+<div class="absolute -left-10 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary ring-8 ring-[#102323]"></div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<p class="text-sm font-medium text-primary mb-1">2024 - 2029</p>
+<h3 class="text-white text-xl font-semibold">BS in Computer Science</h3>
+<p class="text-[#8ecccc] text-sm">COMSATS University Islamabad, Vehari Campus</p>
+<p class="text-white/80 text-sm mt-2">Currently in 3rd Semester</p>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -left-10 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary ring-8 ring-[#102323]"></div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<p class="text-sm font-medium text-primary mb-1">2024 - 2025</p>
+<h3 class="text-white text-xl font-semibold">Full Stack Development Certification</h3>
+<p class="text-[#8ecccc] text-sm">Self-taught & Online Courses</p>
+<p class="text-white/80 text-sm mt-2">Focused on MERN stack technologies</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Skills</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<h3 class="text-white text-xl font-semibold mb-6">Technical Skills</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Frontend Development</span>
+<span class="text-sm font-medium text-primary">90%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Backend Development</span>
+<span class="text-sm font-medium text-primary">85%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Video Editing</span>
+<span class="text-sm font-medium text-primary">80%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">AI Automation</span>
+<span class="text-sm font-medium text-primary">75%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6">
+<h3 class="text-white text-xl font-semibold mb-6">Soft Skills</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Communication</span>
+<span class="text-sm font-medium text-primary">90%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Teamwork</span>
+<span class="text-sm font-medium text-primary">95%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Problem Solving</span>
+<span class="text-sm font-medium text-primary">88%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-base font-medium text-white">Creativity</span>
+<span class="text-sm font-medium text-primary">92%</span>
+</div>
+<div class="w-full bg-[#2f6a6a] rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 92%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Testimonials</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 border border-solid border-[#2f6a6a]">
+<p class="text-white/80 italic mb-4">"Abdullah is a MERN Stack expert with exceptional leadership skills. His 5+ years of hands-on experience in building scalable web applications is evident in every project. As the founder of WE Connect, he provides excellent mentorship and practical learning opportunities. His association with COMSATS University makes him a valuable asset to the academic and professional community."</p>
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="M. Abdullah Wali" style='background-image: url("abdullah-testimonial.jpg");'></div>
+<div>
+<h4 class="text-white font-semibold">M. Abdullah Wali</h4>
+<p class="text-[#8ecccc] text-sm">CEO, WE Connect & Faculty Member, COMSATS University</p>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap gap-2">
+<a href="https://github.com/AbdullahWali79" target="_blank" class="px-4 py-2 rounded-lg bg-[#214a4a] text-white text-sm font-medium hover:bg-[#2f6a6a] transition-colors">View GitHub Profile</a>
+</div>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 border border-solid border-[#2f6a6a]">
+<p class="text-white/80 italic mb-4">"Sami is an exceptional team lead and client manager with strong technical expertise. He effectively communicates with clients to understand requirements and designs robust system architectures. His dual role as a leader and core developer ensures smooth project delivery. His mentorship skills have been instrumental in guiding our team to success."</p>
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" data-alt="M. Sami Ullah Khan" style='background-image: url("sami-testimonial.jpg");'></div>
+<div>
+<h4 class="text-white font-semibold">M. Sami Ullah Khan</h4>
+<p class="text-[#8ecccc] text-sm">Team Lead & Client Manager</p>
+</div>
+</div>
+<div class="mt-4 flex flex-wrap gap-2">
+<a href="https://github.com/Sami3234" target="_blank" class="px-4 py-2 rounded-lg bg-[#214a4a] text-white text-sm font-medium hover:bg-[#2f6a6a] transition-colors">View GitHub Profile</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- About Section -->
+<div id="about" class="mt-16 pt-16">
+<h2 class="text-white text-3xl font-bold mb-8">About Me</h2>
+<div class="bg-[#102323] rounded-xl shadow-lg p-8">
+<p class="text-white/80 text-lg mb-6">I'm a passionate Full Stack Developer currently in my 3rd semester at COMSATS University Islamabad, Vehari Campus. With a strong foundation in both frontend and backend technologies, I'm focused on building modern web applications that provide exceptional user experiences.</p>
+<p class="text-white/80 text-lg mb-6">My journey in web development started with a curiosity for creating interactive user interfaces, and has evolved to encompass full-stack development with technologies like the MERN stack. I'm constantly learning and exploring new technologies to stay current with industry trends.</p>
+<p class="text-white/80 text-lg">When I'm not coding, you can find me contributing to open-source projects, experimenting with AI automation tools, or working on personal projects that solve real-world problems.</p>
+</div>
+</div>
+
+<!-- Services Section -->
+<div id="services" class="mt-16 pt-16">
+<h2 class="text-white text-3xl font-bold mb-8">My Services</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+<div class="text-primary mb-4">
+<span class="material-symbols-outlined text-4xl">design_services</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">UI/UX Design</h3>
+<p class="text-[#8ecccc] mb-4">Creating intuitive and engaging user interfaces with a focus on user experience and accessibility.</p>
+<ul class="text-white/80 text-sm space-y-2">
+<li>• User Research & Personas</li>
+<li>• Wireframing & Prototyping</li>
+<li>• Interactive Design Systems</li>
+<li>• Usability Testing</li>
+</ul>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+<div class="text-primary mb-4">
+<span class="material-symbols-outlined text-4xl">code</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Frontend Development</h3>
+<p class="text-[#8ecccc] mb-4">Building responsive, performant web applications using modern frontend technologies.</p>
+<ul class="text-white/80 text-sm space-y-2">
+<li>• HTML5, CSS3, JavaScript ES6+</li>
+<li>• React, Vue.js, Angular</li>
+<li>• Responsive Design</li>
+<li>• Performance Optimization</li>
+</ul>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+<div class="text-primary mb-4">
+<span class="material-symbols-outlined text-4xl">settings</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Backend Development</h3>
+<p class="text-[#8ecccc] mb-4">Developing robust server-side applications and APIs with scalable architecture.</p>
+<ul class="text-white/80 text-sm space-y-2">
+<li>• Node.js, Express, MongoDB</li>
+<li>• RESTful API Development</li>
+<li>• Database Design & Optimization</li>
+<li>• Authentication & Security</li>
+</ul>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+<div class="text-primary mb-4">
+<span class="material-symbols-outlined text-4xl">auto_awesome</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">AI Automation</h3>
+<p class="text-[#8ecccc] mb-4">Implementing AI-powered solutions to automate workflows and increase productivity.</p>
+<ul class="text-white/80 text-sm space-y-2">
+<li>• Process Automation</li>
+<li>• AI Integration</li>
+<li>• Chatbot Development</li>
+<li>• Data Analysis & Insights</li>
+</ul>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+<div class="text-primary mb-4">
+<span class="material-symbols-outlined text-4xl">videocam</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Video Editing</h3>
+<p class="text-[#8ecccc] mb-4">Creating engaging video content with professional editing and visual effects.</p>
+<ul class="text-white/80 text-sm space-y-2">
+<li>• Motion Graphics</li>
+<li>• Color Correction</li>
+<li>• Audio Mixing</li>
+<li>• Social Media Content</li>
+</ul>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow duration-300">
+<div class="text-primary mb-4">
+<span class="material-symbols-outlined text-4xl">support</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Technical Support</h3>
+<p class="text-[#8ecccc] mb-4">Providing ongoing support and maintenance for web applications and systems.</p>
+<ul class="text-white/80 text-sm space-y-2">
+<li>• Bug Fixes & Troubleshooting</li>
+<li>• Performance Monitoring</li>
+<li>• Security Updates</li>
+<li>• User Training & Documentation</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Portfolio Section -->
+<div id="portfolio" class="mt-16 pt-16">
+<h2 class="text-white text-3xl font-bold mb-8">My Portfolio</h2>
+<p class="text-[#8ecccc] text-lg mb-8">Explore my latest projects and see how I've helped clients achieve their goals through innovative web solutions.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A brightly lit, modern office space with large windows and a clean, minimalist design." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKiN3uvyq5OzbA7yxVSzUewlnGR2NsT9VmCwn1Y9SJzydrBSDppP9ILqLuk1UXUKzY_CtO71fBRqeoSG1etKq2P-FDYoMdmGEqYVYs3ZPbcOiL5yQsp8-cgr9MwtqC9k_7iQipqveAADkA1Vbxy1k8W0XNPlzWe8iELyG_t96ZMkBLe-MYEv9jaMoPT-_ygXw_JCD7n8RYc5ZZu4vEkBDpopPMymQpFRVeewWINOQsVrpLfHk_5HTry3lXATQWFRCvkuZNG0qLyA");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+UI/UX
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">E-commerce Dashboard</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A comprehensive dashboard for e-commerce analytics with real-time data visualization.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Figma</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">D3.js</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 2 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A close-up shot of a person's hands typing on a laptop keyboard, with the screen displaying lines of code." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFLLo8oMj90wBc6blqg9mbCd_SgETSsYwjuPyeEFlrWN1V4Cyy_n6A17kELySHjM_zboW5mO8NQi5zhcYUsYir5kyi_7uSTkhM4k0vVzkJ35NqZ6hv2yt5rJV_58mglJUwabsOCY2zwg_cUEieceQvKitJxcUeEJkfosblU92eSHGbck1MVsarK2B2z622nLozjZc8WhLTLiS3XDdNhOwDAXTg4lyEsy0Blj3mB0s4xrjQg1QP4jPJOxmYOukfr_hce3B5V8UEZw");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web App
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Task Management App</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A productivity application for managing tasks with drag-and-drop functionality.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Vue.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Firebase</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Tailwind</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 3 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A sleek and modern user interface design for a mobile application, displayed on a smartphone screen." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqo3QCx72ufIUWpGNWaZit33HPead2yz2EvMJXCOGEENSUeJFYMPhnGNZtX9TXSakiMGmRy9g8mTEZfiO_WR0Rbs-apzL4grq9YSrirtpNngRy54Mr1KKRbt7qpcO4DnBktSDwbMxziGm_FV5QoLGpoXPBiZ3SZrqKAluaKTgPRaFm68uD3Zo1XHWgfbrOyEyWqHMD3IzZWOFnlpTaw68c46-oF82nRDcG3E-oBOg0diSJqpjdyxOnVv1P1Wg1qH5L_0qmFe-3ZQ");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Mobile
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Fitness Tracker</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A mobile application for tracking workouts and nutrition with personalized recommendations.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Flutter</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Node.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">MongoDB</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 4 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A modern website design with clean typography and ample white space." style='background-image: url("https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Design
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Corporate Website</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A responsive corporate website with modern design and CMS integration.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">WordPress</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">PHP</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 5 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A dashboard interface with charts and data visualization." style='background-image: url("https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Dashboard
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Analytics Dashboard</h3>
+<p class="text-[#8ecccc] text-sm mb-4">An interactive dashboard for visualizing business metrics and KPIs.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Chart.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">API</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Project 6 -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="A mobile app interface with a clean, modern design." style='background-image: url("https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Mobile App
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Recipe Finder</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A mobile app that helps users discover recipes based on available ingredients.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React Native</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Redux</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Firebase</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="#" class="text-primary text-sm font-medium hover:underline">View Project</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Team4stack Website -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Team4stack website project" style='background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Development
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Team4stack Website</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Official website for Team4stack showcasing our services and portfolio. A responsive, modern design with interactive elements.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Tailwind CSS</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="http://www.team4stack.com" target="_blank" class="text-primary text-sm font-medium hover:underline">Visit Website</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- GitHub Profile -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="GitHub profile and projects" style='background-image: url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Open Source
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">GitHub Profile</h3>
+<p class="text-[#8ecccc] text-sm mb-4">My GitHub profile showcasing open-source contributions, personal projects, and collaborative work. Check out my repositories and code samples.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272" target="_blank" class="text-primary text-sm font-medium hover:underline">View Profile</a>
+<a href="https://github.com/Aftab272?tab=repositories" target="_blank" class="text-primary text-sm font-medium hover:underline">View Projects</a>
+</div>
+</div>
+</div>
+
+<!-- MernCrypto Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="MernCrypto project" style='background-image: url("https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+MERN Stack
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">MernCrypto</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A full-stack cryptocurrency tracking application built with the MERN stack. Features real-time price updates and portfolio management.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">MongoDB</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Express</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Node.js</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/merncrypto" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Weather Question Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Weather application project" style='background-image: url("https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+JavaScript
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Weather Question Attempt</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A weather application that fetches and displays current weather conditions. Features location-based weather data and forecasts.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">API Integration</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">CSS3</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/weather-question-attempt" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Generic Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Project showcase" style='background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Full Stack
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Project</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A comprehensive full-stack application showcasing advanced development techniques and best practices.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Node.js</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Database</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/project" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Blogger Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Blogging platform project" style='background-image: url("https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web App
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Blogger</h3>
+<p class="text-[#8ecccc] text-sm mb-4">A full-featured blogging platform with user authentication, post creation, and content management capabilities.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">React</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Firebase</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Markdown</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://github.com/Aftab272/blogger" target="_blank" class="text-primary text-sm font-medium hover:underline">View Code</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Live Demo</a>
+</div>
+</div>
+</div>
+
+<!-- Team4stack Vercel Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Team4stack Vercel Portfolio" style='background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Development
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Team4stack Portfolio</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Live portfolio website deployed on Vercel showcasing Team4stack projects and services.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Vercel</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://aftab-portfolioo.vercel.app/" target="_blank" class="text-primary text-sm font-medium hover:underline">View Live Site</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+
+<!-- Portfolio Screenshot Project -->
+<div class="portfolio-item bg-[#102323] rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+<div class="bg-center bg-no-repeat aspect-video bg-cover relative" data-alt="Portfolio Website Screenshot" style='background-image: url("portfolio-screenshot.png");'>
+<div class="absolute top-2 right-2 bg-primary text-background-dark text-xs font-bold px-2 py-1 rounded">
+Web Development
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-white text-xl font-semibold mb-2">Portfolio Website</h3>
+<p class="text-[#8ecccc] text-sm mb-4">Screenshot of my personal portfolio website deployed on Vercel. Clients can view the live site using the link below.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">HTML/CSS</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">JavaScript</span>
+<span class="bg-[#214a4a] text-[#8ecccc] text-xs px-2 py-1 rounded">Vercel</span>
+</div>
+<div class="flex justify-between items-center">
+<a href="https://aftab-portfolioo.vercel.app/" target="_blank" class="text-primary text-sm font-medium hover:underline">View Live Site</a>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Source Code</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- News Section -->
+<div id="news" class="mt-16 pt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Latest News</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-[#102323] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+<div class="p-6">
+<div class="flex items-center text-[#8ecccc] text-sm mb-3">
+<span class="material-symbols-outlined text-xs mr-2">calendar_today</span>
+<span>October 25, 2025</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Completed MERN Stack Certification</h3>
+<p class="text-[#8ecccc] mb-4">Successfully completed my Full Stack Development Certification focused on MERN stack technologies, enhancing my skills in building scalable web applications.</p>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Read More</a>
+</div>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+<div class="p-6">
+<div class="flex items-center text-[#8ecccc] text-sm mb-3">
+<span class="material-symbols-outlined text-xs mr-2">calendar_today</span>
+<span>October 10, 2025</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Launched Team4stack Website</h3>
+<p class="text-[#8ecccc] mb-4">Proud to announce the launch of the official Team4stack website, showcasing our services and portfolio to clients worldwide.</p>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Read More</a>
+</div>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+<div class="p-6">
+<div class="flex items-center text-[#8ecccc] text-sm mb-3">
+<span class="material-symbols-outlined text-xs mr-2">calendar_today</span>
+<span>September 15, 2025</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">Contributed to Open Source Project</h3>
+<p class="text-[#8ecccc] mb-4">Made significant contributions to a popular open-source project, improving performance and adding new features for the community.</p>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Read More</a>
+</div>
+</div>
+<div class="bg-[#102323] rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+<div class="p-6">
+<div class="flex items-center text-[#8ecccc] text-sm mb-3">
+<span class="material-symbols-outlined text-xs mr-2">calendar_today</span>
+<span>August 22, 2025</span>
+</div>
+<h3 class="text-white text-xl font-semibold mb-3">AI Automation Workshop</h3>
+<p class="text-[#8ecccc] mb-4">Hosted a workshop on AI automation tools for fellow students at COMSATS University, sharing knowledge on productivity enhancement.</p>
+<a href="#" class="text-primary text-sm font-medium hover:underline">Read More</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Contact Section -->
+<div id="contact" class="mt-16 pt-16">
+<h2 class="text-white text-3xl font-bold mb-8">Get In Touch</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div class="bg-[#102323] rounded-xl shadow-lg p-8">
+<h3 class="text-white text-xl font-semibold mb-6">Send me a message</h3>
+<form class="space-y-6">
+<div>
+<label class="block text-[#8ecccc] text-sm font-medium mb-2" for="name">Name</label>
+<input type="text" id="name" class="w-full px-4 py-3 rounded-lg bg-[#214a4a] text-white border border-[#2f6a6a] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Your name">
+</div>
+<div>
+<label class="block text-[#8ecccc] text-sm font-medium mb-2" for="email">Email</label>
+<input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-[#214a4a] text-white border border-[#2f6a6a] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Your email">
+</div>
+<div>
+<label class="block text-[#8ecccc] text-sm font-medium mb-2" for="subject">Subject</label>
+<input type="text" id="subject" class="w-full px-4 py-3 rounded-lg bg-[#214a4a] text-white border border-[#2f6a6a] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Subject">
+</div>
+<div>
+<label class="block text-[#8ecccc] text-sm font-medium mb-2" for="message">Message</label>
+<textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg bg-[#214a4a] text-white border border-[#2f6a6a] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Your message"></textarea>
+</div>
+<button type="submit" class="px-6 py-3 rounded-lg bg-primary text-background-dark font-medium hover:bg-primary/80 transition-colors shadow-lg shadow-primary/20">Send Message</button>
+</form>
+</div>
+<div>
+<div class="bg-[#102323] rounded-xl shadow-lg p-8 h-full">
+<h3 class="text-white text-xl font-semibold mb-6">Contact Information</h3>
+<div class="space-y-6">
+<div class="flex items-start">
+<div class="text-primary mr-4 mt-1">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<h4 class="text-white font-medium mb-1">Location</h4>
+<p class="text-[#8ecccc]">Vehari, Pakistan</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="text-primary mr-4 mt-1">
+<span class="material-symbols-outlined">email</span>
+</div>
+<div>
+<h4 class="text-white font-medium mb-1">Email</h4>
+<p class="text-[#8ecccc]">ranaaftabakram982@gmail.com</p>
+<a href="mailto:ranaaftabakram982@gmail.com" class="text-primary text-sm hover:underline">Send an email</a>
+</div>
+</div>
+<div class="flex items-start">
+<div class="text-primary mr-4 mt-1">
+<span class="material-symbols-outlined">language</span>
+</div>
+<div>
+<h4 class="text-white font-medium mb-1">GitHub</h4>
+<p class="text-[#8ecccc]">github.com/Aftab272</p>
+<a href="https://github.com/Aftab272" target="_blank" class="text-primary text-sm hover:underline">Visit Profile</a>
+</div>
+</div>
+<div class="flex items-start">
+<div class="text-primary mr-4 mt-1">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h4 class="text-white font-medium mb-1">University</h4>
+<p class="text-[#8ecccc]">COMSATS University Islamabad</p>
+<p class="text-[#8ecccc]">Vehari Campus</p>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-[#2f6a6a]">
+<h4 class="text-white font-medium mb-4">Follow Me</h4>
+<div class="flex space-x-4">
+<a href="https://github.com/Aftab272" target="_blank" class="text-[#8ecccc] hover:text-primary transition-colors" title="GitHub">
+<span class="material-symbols-outlined text-2xl">code</span>
+</a>
+<a href="https://www.linkedin.com/in/rana-aftab-akram" target="_blank" class="text-[#8ecccc] hover:text-primary transition-colors" title="LinkedIn">
+<span class="material-symbols-outlined text-2xl">work</span>
+</a>
+<a href="https://www.facebook.com/" target="_blank" class="text-[#8ecccc] hover:text-primary transition-colors" title="Facebook">
+<span class="material-symbols-outlined text-2xl">thumb_up</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Button functionality
+document.getElementById('downloadResumeBtn').addEventListener('click', function() {
+    // Create a temporary link to simulate resume download
+    const link = document.createElement('a');
+    link.href = '#contact'; // Scroll to contact section
+    link.click();
+});
+
+document.getElementById('contactMeBtn').addEventListener('click', function() {
+    // Scroll to contact section
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+        contactSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+});
+</script>
+</body></html>
